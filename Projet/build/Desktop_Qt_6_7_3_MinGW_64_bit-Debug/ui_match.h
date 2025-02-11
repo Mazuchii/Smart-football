@@ -11,13 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -32,7 +32,6 @@ public:
     QPushButton *pushButton_7;
     QPushButton *pushButton_8;
     QPushButton *pushButton_9;
-    QGraphicsView *graphicsView;
     QGroupBox *groupBox_3;
     QLabel *label;
     QLabel *label_2;
@@ -40,9 +39,12 @@ public:
     QLabel *label_4;
     QLabel *label_5;
     QLabel *label_6;
-    QLabel *label_7;
-    QLabel *label_8;
+    QTabWidget *tabWidget;
+    QWidget *tab;
+    QPushButton *pushButton_2;
+    QWidget *tab_2;
     QLabel *label_9;
+    QLabel *label_10;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -93,12 +95,6 @@ public:
 "font: 13pt \"Trebuchet MS\";\n"
 "color: rgb(219, 173, 84);\n"
 "selection-color: rgb(85, 170, 0);"));
-        graphicsView = new QGraphicsView(centralwidget);
-        graphicsView->setObjectName("graphicsView");
-        graphicsView->setGeometry(QRect(540, 80, 711, 451));
-        graphicsView->setStyleSheet(QString::fromUtf8("background-color: rgb(82, 172, 44);\n"
-"border-color: rgb(255, 255, 255);"));
-        graphicsView->setResizeAnchor(QGraphicsView::ViewportAnchor::NoAnchor);
         groupBox_3 = new QGroupBox(centralwidget);
         groupBox_3->setObjectName("groupBox_3");
         groupBox_3->setGeometry(QRect(10, 70, 521, 461));
@@ -134,22 +130,22 @@ public:
 "color: rgb(255, 255, 255);"));
         label_6 = new QLabel(groupBox_3);
         label_6->setObjectName("label_6");
-        label_6->setGeometry(QRect(10, 300, 461, 41));
+        label_6->setGeometry(QRect(10, 300, 461, 151));
         label_6->setStyleSheet(QString::fromUtf8("background-color: rgb(99, 99, 99);\n"
 "font: 14pt \"Trebuchet MS\";\n"
 "color: rgb(255, 255, 255);"));
-        label_7 = new QLabel(groupBox_3);
-        label_7->setObjectName("label_7");
-        label_7->setGeometry(QRect(10, 350, 461, 41));
-        label_7->setStyleSheet(QString::fromUtf8("background-color: rgb(99, 99, 99);\n"
-"font: 14pt \"Trebuchet MS\";\n"
-"color: rgb(255, 255, 255);"));
-        label_8 = new QLabel(groupBox_3);
-        label_8->setObjectName("label_8");
-        label_8->setGeometry(QRect(10, 400, 461, 41));
-        label_8->setStyleSheet(QString::fromUtf8("background-color: rgb(99, 99, 99);\n"
-"font: 14pt \"Trebuchet MS\";\n"
-"color: rgb(255, 255, 255);"));
+        tabWidget = new QTabWidget(groupBox_3);
+        tabWidget->setObjectName("tabWidget");
+        tabWidget->setGeometry(QRect(10, 10, 135, 80));
+        tab = new QWidget();
+        tab->setObjectName("tab");
+        pushButton_2 = new QPushButton(tab);
+        pushButton_2->setObjectName("pushButton_2");
+        pushButton_2->setGeometry(QRect(0, 10, 93, 29));
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName("tab_2");
+        tabWidget->addTab(tab_2, QString());
         label_9 = new QLabel(centralwidget);
         label_9->setObjectName("label_9");
         label_9->setGeometry(QRect(30, -10, 141, 81));
@@ -158,6 +154,11 @@ public:
 ""));
         label_9->setPixmap(QPixmap(QString::fromUtf8("assetes/logo/logo_app.png")));
         label_9->setScaledContents(true);
+        label_10 = new QLabel(centralwidget);
+        label_10->setObjectName("label_10");
+        label_10->setGeometry(QRect(552, 99, 691, 421));
+        label_10->setPixmap(QPixmap(QString::fromUtf8(":/img/assetes/img/terain.png")));
+        label_10->setScaledContents(true);
         Match->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Match);
         menubar->setObjectName("menubar");
@@ -169,6 +170,9 @@ public:
 
         retranslateUi(Match);
 
+        tabWidget->setCurrentIndex(0);
+
+
         QMetaObject::connectSlotsByName(Match);
     } // setupUi
 
@@ -176,21 +180,23 @@ public:
     {
         Match->setWindowTitle(QCoreApplication::translate("Match", "Match", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Match", "menu", nullptr));
-        pushButton->setText(QCoreApplication::translate("Match", "PushButton", nullptr));
-        pushButton_6->setText(QCoreApplication::translate("Match", "PushButton", nullptr));
-        pushButton_7->setText(QCoreApplication::translate("Match", "PushButton", nullptr));
-        pushButton_8->setText(QCoreApplication::translate("Match", "PushButton", nullptr));
-        pushButton_9->setText(QCoreApplication::translate("Match", "PushButton", nullptr));
+        pushButton->setText(QCoreApplication::translate("Match", "home", nullptr));
+        pushButton_6->setText(QCoreApplication::translate("Match", "match", nullptr));
+        pushButton_7->setText(QCoreApplication::translate("Match", "equipe", nullptr));
+        pushButton_8->setText(QCoreApplication::translate("Match", "stade", nullptr));
+        pushButton_9->setText(QCoreApplication::translate("Match", "employer", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("Match", "contenue", nullptr));
-        label->setText(QCoreApplication::translate("Match", "nom d'equipe", nullptr));
-        label_2->setText(QCoreApplication::translate("Match", "score", nullptr));
-        label_3->setText(QCoreApplication::translate("Match", "stade", nullptr));
-        label_4->setText(QCoreApplication::translate("Match", "date", nullptr));
-        label_5->setText(QCoreApplication::translate("Match", "type du match", nullptr));
-        label_6->setText(QCoreApplication::translate("Match", "TextLabel", nullptr));
-        label_7->setText(QCoreApplication::translate("Match", "TextLabel", nullptr));
-        label_8->setText(QCoreApplication::translate("Match", "TextLabel", nullptr));
+        label->setText(QCoreApplication::translate("Match", "psg-rmd", nullptr));
+        label_2->setText(QCoreApplication::translate("Match", "2-1", nullptr));
+        label_3->setText(QCoreApplication::translate("Match", "Bernabiu", nullptr));
+        label_4->setText(QCoreApplication::translate("Match", "15/10/2025", nullptr));
+        label_5->setText(QCoreApplication::translate("Match", "Champions League", nullptr));
+        label_6->setText(QCoreApplication::translate("Match", "prediction", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("Match", "PushButton", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Match", "Tab 1", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Match", "Tab 2", nullptr));
         label_9->setText(QString());
+        label_10->setText(QString());
     } // retranslateUi
 
 };

@@ -106,7 +106,8 @@ release/qrc_assetes.cpp: ../../assetes.qrc \
 		C:/QT/6.7.3/mingw_64/bin/rcc.exe \
 		../../assetes/logo/logo_equipe.jpg \
 		../../assetes/logo/logo_app.png \
-		../../assetes/logo/logo_simple.png
+		../../assetes/logo/logo_simple.png \
+		../../assetes/img/terain.png
 	C:\QT\6.7.3\mingw_64\bin\rcc.exe -name assetes --no-zstd ..\..\assetes.qrc -o release\qrc_assetes.cpp
 
 compiler_moc_predefs_make_all: release/moc_predefs.h

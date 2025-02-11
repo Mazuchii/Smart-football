@@ -4,4 +4,7 @@
         <file>assetes/logo/logo_equipe.jpg</file>
         <file>assetes/logo/logo_simple.png</file>
     </qresource>
+    <qresource prefix="/img">
+        <file>assetes/img/terain.png</file>
+    </qresource>
 </RCC>
