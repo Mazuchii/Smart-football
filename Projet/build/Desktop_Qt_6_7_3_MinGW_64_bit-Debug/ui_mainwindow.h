@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'match.ui'
+** Form generated from reading UI file 'mainwindow.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.7.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_MATCH_H
-#define UI_MATCH_H
+#ifndef UI_MAINWINDOW_H
+#define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -22,7 +22,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -54,11 +54,9 @@ public:
     QLabel *label_14;
     QComboBox *stad_ajout;
     QWidget *tab_2;
-    QTableView *tab_match;
+    QTableWidget *tab_match;
     QPushButton *bt_recherch;
     QLineEdit *recherch;
-    QPushButton *bt_modifier;
-    QPushButton *bt_supprimer;
     QWidget *tab;
     QGroupBox *groupBox_3;
     QLabel *lab_equip;
@@ -200,23 +198,15 @@ public:
         equip1_ajout->setObjectName("equip1_ajout");
         equip1_ajout->setGeometry(QRect(360, 160, 191, 41));
         equip1_ajout->setStyleSheet(QString::fromUtf8("background-color: rgb(24, 168, 132);\n"
-"color: rgb(255, 255, 255);\n"
-"font: 700 10pt \"Segoe UI\";"));
+""));
         equip2_ajout = new QComboBox(groupBox_2);
         equip2_ajout->setObjectName("equip2_ajout");
         equip2_ajout->setGeometry(QRect(360, 210, 191, 41));
-        equip2_ajout->setStyleSheet(QString::fromUtf8("background-color: rgb(24, 168, 132);\n"
-"color: rgb(255, 255, 255);\n"
-"font: 700 10pt \"Segoe UI\";"));
+        equip2_ajout->setStyleSheet(QString::fromUtf8("background-color: rgb(24, 168, 132);"));
         type_ajout = new QComboBox(groupBox_2);
-        type_ajout->addItem(QString());
-        type_ajout->addItem(QString());
-        type_ajout->addItem(QString());
         type_ajout->setObjectName("type_ajout");
         type_ajout->setGeometry(QRect(870, 170, 191, 41));
-        type_ajout->setStyleSheet(QString::fromUtf8("background-color: rgb(24, 168, 132);\n"
-"color: rgb(255, 255, 255);\n"
-"font: 700 10pt \"Segoe UI\";"));
+        type_ajout->setStyleSheet(QString::fromUtf8("background-color: rgb(24, 168, 132);"));
         bt_ajouter = new QPushButton(groupBox_2);
         bt_ajouter->setObjectName("bt_ajouter");
         bt_ajouter->setGeometry(QRect(540, 320, 201, 51));
@@ -234,80 +224,78 @@ public:
         stad_ajout->setObjectName("stad_ajout");
         stad_ajout->setGeometry(QRect(870, 110, 191, 41));
         stad_ajout->setStyleSheet(QString::fromUtf8("background-color: rgb(24, 168, 132);\n"
-"color: rgb(255, 255, 255);\n"
-"font: 700 10pt \"Segoe UI\";"));
+""));
         tabWidget->addTab(tab_3, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
-        tab_match = new QTableView(tab_2);
+        tab_match = new QTableWidget(tab_2);
+        if (tab_match->columnCount() < 4)
+            tab_match->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        tab_match->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        tab_match->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        tab_match->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        tab_match->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         tab_match->setObjectName("tab_match");
-        tab_match->setGeometry(QRect(0, 0, 691, 411));
-        tab_match->setStyleSheet(QString::fromUtf8("QTableView {\n"
-"    background-color: #002b11;\n"
-"    color: #ffffff;\n"
-"    font-size: 16px;\n"
-"    font-family: \"Segoe UI\", sans-serif;\n"
-"    border: 2px solid #4CAF50;\n"
-"    gridline-color: #4CAF50;\n"
-"    selection-background-color: #28a745;\n"
+        tab_match->setGeometry(QRect(-5, 0, 731, 431));
+        tab_match->setStyleSheet(QString::fromUtf8("\n"
+"QTableWidget {\n"
+"    background-color: #f8f9fa;\n"
+"    border: 2px solid #4CAF50;  /* Green Border */\n"
+"    gridline-color: #ddd;\n"
+"    selection-background-color: #2196F3;  /* Blue Selection */\n"
 "    selection-color: white;\n"
-"    alternate-background-color: #144d29;\n"
+"    alternate-background-color: #E3F2FD;  /* Light blue alternating rows */\n"
 "}\n"
 "\n"
-"QTableView::item {\n"
-"    padding: 8px;\n"
-"    border-bottom: 1px solid #3e8e41;\n"
-"}\n"
-"\n"
-"QTableView::item:hover {\n"
-"    background-color: #66ff99;\n"
-"    color: #000;\n"
-"}\n"
-"\n"
-"QTableView::item:selected {\n"
-"    background-color: #28a745;\n"
-"    color: white;\n"
-"}\n"
-"\n"
+"/* Header Style */\n"
 "QHeaderView::section {\n"
-"    background-color: #a3f7bf;\n"
-"    color: #003300;\n"
-"    padding: 7px;\n"
-"    font-size: 18px;\n"
+"background-color: rgb(102, 218, 166);\n"
+"    color: black;\n"
+"    padding: 8px;\n"
+"    font-size: 16px;\n"
 "    font-weight: bold;\n"
 "    border: 1px solid #388E3C;\n"
-"    text-align: center;\n"
-"}"));
+"}\n"
+"\n"
+"/* Rows and Cells */\n"
+"QTableWidget::item {\n"
+"    padding: 10px;\n"
+"    border-bottom: 1px solid #ddd;\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"/* Hover Effect */\n"
+"QTableWidget::item:hover {\n"
+"    background-color: #FFD700; /* Gold on Hover */\n"
+"    color: black;\n"
+"}\n"
+"\n"
+"/* Selected Row */\n"
+"QTableWidget::item:selected {\n"
+"    background-color: #2196F3;\n"
+"    color: white;\n"
+"}\n"
+""));
         tab_match->setLineWidth(1);
-        tab_match->horizontalHeader()->setMinimumSectionSize(150);
-        tab_match->horizontalHeader()->setStretchLastSection(true);
+        tab_match->horizontalHeader()->setMinimumSectionSize(100);
+        tab_match->horizontalHeader()->setDefaultSectionSize(150);
         bt_recherch = new QPushButton(tab_2);
         bt_recherch->setObjectName("bt_recherch");
-        bt_recherch->setGeometry(QRect(840, 120, 271, 51));
+        bt_recherch->setGeometry(QRect(840, 250, 271, 51));
         bt_recherch->setStyleSheet(QString::fromUtf8("background-color: rgb(226, 191, 94);\n"
 "color: rgb(0, 0, 0);\n"
 "font: 600 11pt \"Segoe UI\";\n"
 "selection-background-color: rgb(227, 172, 7);"));
         recherch = new QLineEdit(tab_2);
         recherch->setObjectName("recherch");
-        recherch->setGeometry(QRect(790, 50, 391, 51));
+        recherch->setGeometry(QRect(790, 140, 391, 51));
         recherch->setStyleSheet(QString::fromUtf8("background-color: rgb(102, 218, 166);\n"
 "font: 600 12pt \"Segoe UI\";\n"
 "color: rgb(255, 255, 255);"));
-        bt_modifier = new QPushButton(tab_2);
-        bt_modifier->setObjectName("bt_modifier");
-        bt_modifier->setGeometry(QRect(840, 180, 271, 51));
-        bt_modifier->setStyleSheet(QString::fromUtf8("background-color: rgb(226, 191, 94);\n"
-"color: rgb(0, 0, 0);\n"
-"font: 600 11pt \"Segoe UI\";\n"
-"selection-background-color: rgb(227, 172, 7);"));
-        bt_supprimer = new QPushButton(tab_2);
-        bt_supprimer->setObjectName("bt_supprimer");
-        bt_supprimer->setGeometry(QRect(840, 240, 271, 51));
-        bt_supprimer->setStyleSheet(QString::fromUtf8("background-color: rgb(226, 191, 94);\n"
-"color: rgb(0, 0, 0);\n"
-"font: 600 11pt \"Segoe UI\";\n"
-"selection-background-color: rgb(227, 172, 7);"));
         tabWidget->addTab(tab_2, QString());
         tab = new QWidget();
         tab->setObjectName("tab");
@@ -367,7 +355,7 @@ public:
 
         retranslateUi(Match);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Match);
@@ -389,19 +377,21 @@ public:
         label_11->setText(QCoreApplication::translate("Match", "<html><head/><body><p align=\"center\">equipe 2</p></body></html>", nullptr));
         label_12->setText(QCoreApplication::translate("Match", "<html><head/><body><p align=\"center\">type du match</p></body></html>", nullptr));
         label_13->setText(QCoreApplication::translate("Match", "<html><head/><body><p align=\"center\"> ajouter match</p></body></html>", nullptr));
-        type_ajout->setItemText(0, QCoreApplication::translate("Match", "Classic", nullptr));
-        type_ajout->setItemText(1, QCoreApplication::translate("Match", "Champions League", nullptr));
-        type_ajout->setItemText(2, QCoreApplication::translate("Match", "amical", nullptr));
-
         bt_ajouter->setText(QCoreApplication::translate("Match", "ajouter", nullptr));
         label_14->setText(QCoreApplication::translate("Match", "<html><head/><body><p align=\"center\">Stade</p></body></html>", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("Match", "ajouter match", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tab_match->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("Match", "Num\303\251ro", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tab_match->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("Match", "equpe1", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = tab_match->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("Match", "equipe2", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = tab_match->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("Match", "Date", nullptr));
 #if QT_CONFIG(whatsthis)
         tab_match->setWhatsThis(QCoreApplication::translate("Match", "<html><head/><body><p align=\"center\"><br/></p></body></html>", nullptr));
 #endif // QT_CONFIG(whatsthis)
         bt_recherch->setText(QCoreApplication::translate("Match", "recherche", nullptr));
-        bt_modifier->setText(QCoreApplication::translate("Match", "Modifier", nullptr));
-        bt_supprimer->setText(QCoreApplication::translate("Match", "Suprimer", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Match", "afficher match", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("Match", "contenue", nullptr));
 #if QT_CONFIG(whatsthis)
@@ -425,4 +415,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_MATCH_H
+#endif // UI_MAINWINDOW_H
