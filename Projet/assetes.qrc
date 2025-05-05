@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/logo">
-        <file>assetes/logo/logo_app.png</file>
-        <file>assetes/logo/logo_equipe.jpg</file>
-        <file>assetes/logo/logo_simple.png</file>
-    </qresource>
-</RCC>
