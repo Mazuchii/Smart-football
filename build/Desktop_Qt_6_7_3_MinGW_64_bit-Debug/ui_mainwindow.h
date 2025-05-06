@@ -58,6 +58,10 @@ public:
     QLineEdit *salaire_2;
     QLineEdit *niveaux_dexp_2;
     QLineEdit *numTel_2;
+    QTextEdit *textEdit_17;
+    QLineEdit *adresse;
+    QTextEdit *textEdit_19;
+    QLineEdit *mdp;
     QWidget *tab_7;
     QTableWidget *tab1_2;
     QPushButton *PDF;
@@ -88,7 +92,7 @@ public:
     QLineEdit *numTel_3;
     QTextEdit *textEdit_31;
     QWidget *tab_10;
-    QWidget *statsChartContainerWidget;
+    QWidget *statsDisplayWidget;
     QPushButton *pushButton_5;
     QLabel *label_9;
     QPushButton *pushButton;
@@ -101,7 +105,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1153, 710);
+        MainWindow->resize(1153, 745);
         MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 85, 0);"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName("centralWidget");
@@ -120,7 +124,7 @@ public:
         pushButton_3->setStyleSheet(QString::fromUtf8("background-color: rgb(250, 207, 104);"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(100, 130, 941, 531));
+        tabWidget->setGeometry(QRect(100, 130, 941, 561));
         tab_6 = new QWidget();
         tab_6->setObjectName("tab_6");
         textEdit_9 = new QTextEdit(tab_6);
@@ -152,7 +156,7 @@ public:
         textEdit_16->setGeometry(QRect(160, 380, 201, 41));
         textBrowser_3 = new QTextBrowser(tab_6);
         textBrowser_3->setObjectName("textBrowser_3");
-        textBrowser_3->setGeometry(QRect(40, 20, 691, 421));
+        textBrowser_3->setGeometry(QRect(40, 20, 691, 511));
         textBrowser_3->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);\n"
 "background-color: rgb(10, 48, 13);"));
         homme_2 = new QRadioButton(tab_6);
@@ -198,6 +202,22 @@ public:
         numTel_2->setGeometry(QRect(440, 330, 221, 41));
         numTel_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);"));
+        textEdit_17 = new QTextEdit(tab_6);
+        textEdit_17->setObjectName("textEdit_17");
+        textEdit_17->setGeometry(QRect(160, 430, 201, 41));
+        adresse = new QLineEdit(tab_6);
+        adresse->setObjectName("adresse");
+        adresse->setGeometry(QRect(440, 430, 221, 41));
+        adresse->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);"));
+        textEdit_19 = new QTextEdit(tab_6);
+        textEdit_19->setObjectName("textEdit_19");
+        textEdit_19->setGeometry(QRect(160, 480, 201, 41));
+        mdp = new QLineEdit(tab_6);
+        mdp->setObjectName("mdp");
+        mdp->setGeometry(QRect(440, 480, 221, 41));
+        mdp->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);"));
         tabWidget->addTab(tab_6, QString());
         textBrowser_3->raise();
         textEdit_9->raise();
@@ -218,6 +238,10 @@ public:
         salaire_2->raise();
         niveaux_dexp_2->raise();
         numTel_2->raise();
+        textEdit_17->raise();
+        adresse->raise();
+        textEdit_19->raise();
+        mdp->raise();
         tab_7 = new QWidget();
         tab_7->setObjectName("tab_7");
         tab1_2 = new QTableWidget(tab_7);
@@ -377,9 +401,9 @@ public:
         textEdit_31->raise();
         tab_10 = new QWidget();
         tab_10->setObjectName("tab_10");
-        statsChartContainerWidget = new QWidget(tab_10);
-        statsChartContainerWidget->setObjectName("statsChartContainerWidget");
-        statsChartContainerWidget->setGeometry(QRect(120, 50, 551, 331));
+        statsDisplayWidget = new QWidget(tab_10);
+        statsDisplayWidget->setObjectName("statsDisplayWidget");
+        statsDisplayWidget->setGeometry(QRect(120, 50, 551, 331));
         tabWidget->addTab(tab_10, QString());
         pushButton_5 = new QPushButton(centralWidget);
         pushButton_5->setObjectName("pushButton_5");
@@ -421,7 +445,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -511,6 +535,22 @@ public:
         poste_2->setItemText(3, QCoreApplication::translate("MainWindow", "Direction communication", nullptr));
 
         addButton_2->setText(QCoreApplication::translate("MainWindow", "ajouter", nullptr));
+        textEdit_17->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:700; font-style:italic; text-decoration: underline;\">Adresse</span></p></body></html>", nullptr));
+        textEdit_19->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:700; font-style:italic; text-decoration: underline;\">MDP</span></p></body></html>", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_6), QCoreApplication::translate("MainWindow", "ajouter employe", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tab1_2->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Nom", nullptr));

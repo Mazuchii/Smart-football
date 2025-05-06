@@ -1,278 +1,249 @@
 #include "employe.h"
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
-#include <QDir>
-#include <QSqlError> // Include for error reporting
-#include <QMap>      // Include QMap again for implementation
-#include <QVariant>
+#include <QtSql/QSqlError> // Include for error reporting
+#include <QDebug>          // For printing debug messages
 
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QSqlDatabase> // Include for checking DB connection
-#include <QMap>
-#include <QVariant>
-#include <QDebug>
-Employee::Employee() :
-    m_id(0), m_salaire(0.0) {}
+// --- Constructors ---
 
-Employee::Employee(int id, const QString& nom, const QString& prenom, const QString& numTel,
-                   const QDate& dateNaiss, const QString& poste, double salaire,
-                   const QString& sexe, const QString& niveauExp) :
-    m_id(id), m_nom(nom), m_prenom(prenom), m_numTel(numTel),
-    m_dateNaissance(dateNaiss), m_poste(poste), m_salaire(salaire),
-    m_sexe(sexe), m_niveauExp(niveauExp) {}
-
-bool Employee::initializeDatabase() {
-    // Check driver
-    if (!QSqlDatabase::isDriverAvailable("QSQLITE")) {
-        qDebug() << "SQLite driver missing!";
-        return false;
-    }
-
-
-
-    // Configure database
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    QDir().mkdir("database");  // Ensure directory exists
-    db.setDatabaseName(QDir::currentPath() + "/database/employee_db.sqlite");
-
-    // Open database
-    if (!db.open()) {
-        qDebug() << "Cannot open database:" << db.lastError().text();
-        return false;
-    }
-
-    // Create table
-    QSqlQuery query;
-    QString createTable =
-        "CREATE TABLE IF NOT EXISTS employees ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "nom TEXT NOT NULL, "
-        "prenom TEXT NOT NULL, "
-        "num_tel TEXT NOT NULL, "
-        "date_naissance TEXT NOT NULL, "  // SQLite uses TEXT for dates
-        "poste TEXT NOT NULL, "
-        "salaire REAL NOT NULL, "
-        "sexe TEXT NOT NULL, "
-        "niveau_experience TEXT, "
-        "created_at TEXT DEFAULT CURRENT_TIMESTAMP)";  // TEXT for timestamp
-
-    if (!query.exec(createTable)) {
-        qDebug() << "Failed to create table:" << query.lastError().text();
-        return false;
-    }
-
-    return true;
+Employe::Employe()
+{
+    // Initialize with default/invalid values
+    this->id_emp = -1; // Use -1 or 0 to indicate an invalid/new ID
+    this->nom = "";
+    this->prenom = "";
+    this->adresse = "";
+    this->num_tel_emp = "";
+    this->date_naiss_emp = QDate(); // Invalid date
+    this->poste = "";
+    this->salaire = 0.0;
+    this->statut = "";
+    this->sexe = "";
+    this->mdp = "";
 }
 
-bool Employee::create()
+Employe::Employe(int id, QString n, QString p, QString adr, QString tel, QDate dateN,
+                 QString post, double sal, QString stat, QString sex, QString pass)
 {
-    QSqlQuery query;
-    query.prepare(
-        "INSERT INTO employees (nom, prenom, num_tel, date_naissance, poste, salaire, sexe, niveau_experience) "
-        "VALUES (:nom, :prenom, :num_tel, :date_naissance, :poste, :salaire, :sexe, :niveau_experience)");
-
-    query.bindValue(":nom", m_nom);
-    query.bindValue(":prenom", m_prenom);
-    query.bindValue(":num_tel", m_numTel);
-    query.bindValue(":date_naissance", m_dateNaissance.toString("yyyy-MM-dd"));
-    query.bindValue(":poste", m_poste);
-    query.bindValue(":salaire", m_salaire);
-    query.bindValue(":sexe", m_sexe);
-    query.bindValue(":niveau_experience", m_niveauExp);
-
-    if (!query.exec()) {
-        m_lastError = query.lastError().text();
-        return false;
-    }
-
-    m_id = query.lastInsertId().toInt();
-    return true;
+    this->id_emp = id;
+    this->nom = n;
+    this->prenom = p;
+    this->adresse = adr;
+    this->num_tel_emp = tel;
+    this->date_naiss_emp = dateN;
+    this->poste = post;
+    this->salaire = sal;
+    this->statut = stat;
+    this->sexe = sex;
+    this->mdp = pass;
 }
 
-bool Employee::update()
+// --- Getters ---
+
+int Employe::getIdEmp() const { return id_emp; }
+QString Employe::getNom() const { return nom; }
+QString Employe::getPrenom() const { return prenom; }
+QString Employe::getAdresse() const { return adresse; }
+QString Employe::getNumTelEmp() const { return num_tel_emp; }
+QDate Employe::getDateNaissEmp() const { return date_naiss_emp; }
+QString Employe::getPoste() const { return poste; }
+double Employe::getSalaire() const { return salaire; }
+QString Employe::getStatut() const { return statut; }
+QString Employe::getSexe() const { return sexe; }
+QString Employe::getMdp() const { return mdp; } // Use with caution
+
+// --- Setters ---
+
+void Employe::setIdEmp(int id) { this->id_emp = id; }
+void Employe::setNom(const QString &n) { this->nom = n; }
+void Employe::setPrenom(const QString &p) { this->prenom = p; }
+void Employe::setAdresse(const QString &adr) { this->adresse = adr; }
+void Employe::setNumTelEmp(const QString &tel) { this->num_tel_emp = tel; }
+void Employe::setDateNaissEmp(const QDate &dateN) { this->date_naiss_emp = dateN; }
+void Employe::setPoste(const QString &post) { this->poste = post; }
+void Employe::setSalaire(double sal) { this->salaire = sal; }
+void Employe::setStatut(const QString &stat) { this->statut = stat; }
+void Employe::setSexe(const QString &sex) { this->sexe = sex; }
+void Employe::setMdp(const QString &pass) { this->mdp = pass; } // Use with caution
+
+// --- Database Interaction Methods ---
+
+bool Employe::ajouter()
 {
     QSqlQuery query;
-    query.prepare(
-        "UPDATE employe SET "
-        "nom = :nom, prenom = :prenom, num_tel = :num_tel, "
-        "date_naissance = :date_naissance, poste = :poste, "
-        "salaire = :salaire, sexe = :sexe, niveau_experience = :niveau_experience "
-        "WHERE ID_EMP = :id");
 
-    query.bindValue(":id", m_id);
-    query.bindValue(":nom", m_nom);
-    query.bindValue(":prenom", m_prenom);
-    query.bindValue(":num_tel", m_numTel);
-    query.bindValue(":date_naissance", m_dateNaissance.toString("yyyy-MM-dd"));
-    query.bindValue(":poste", m_poste);
-    query.bindValue(":salaire", m_salaire);
-    query.bindValue(":sexe", m_sexe);
-    query.bindValue(":niveau_experience", m_niveauExp);
+    // Prepare the INSERT statement - column names MUST match your DB table
+    // Assuming ID_EMP is auto-generated (e.g., by a sequence/trigger in Oracle)
+    // If you need to provide ID_EMP, add it to the query and bind it.
+    query.prepare("INSERT INTO EMPLOYE (NOM, PRENOM, ADRESSE, NUM_TEL_EMP, DATE_NAISS_EMP, POSTE, SALAIRE, STATUT, SEXE, MDP) "
+                  "VALUES (:nom, :prenom, :adresse, :num_tel, :date_n, :poste, :salaire, :statut, :sexe, :mdp)");
 
-    if (!query.exec()) {
-        m_lastError = query.lastError().text();
-        return false;
+    // Bind values from the object's members
+    query.bindValue(":nom", this->nom);
+    query.bindValue(":prenom", this->prenom);
+    query.bindValue(":adresse", this->adresse); // Bind even if not fully used in UI yet
+    query.bindValue(":num_tel", this->num_tel_emp);
+    query.bindValue(":date_n", this->date_naiss_emp);
+    query.bindValue(":poste", this->poste);
+    query.bindValue(":salaire", this->salaire);
+    query.bindValue(":statut", this->statut); // Bind even if not fully used in UI yet
+    query.bindValue(":sexe", this->sexe);     // Make sure this matches DB expectation (e.g., 'H', 'F')
+    query.bindValue(":mdp", this->mdp);       // Bind password
+
+    if (!query.exec()) { // <--- If this fails...
+        qDebug() << "Error adding employee:" << query.lastError().text(); // This should print the DB error
+        return false; // <--- ...it returns false here
     }
     return true;
 }
 
-
-QMap<QString, double> Employee::calculerStatistiquesSexe()
+// Static method - doesn't operate on a specific instance
+QSqlQueryModel* Employe::afficher(QString filter, QString sortBy)
 {
-    qDebug() << "--- Entering calculerStatistiquesSexe (using 'employees' table, 'sexe' column) ---";
-    QMap<QString, double> stats;
-    QSqlQuery queryTotal;
-    double totalEmployees = 0;
+    QSqlQueryModel* model = new QSqlQueryModel(); // Caller must delete this later!
+    QSqlQuery query; // Use temporary query object
 
-    // --- Check Database Connection ---
-    QSqlDatabase db = QSqlDatabase::database(); // Get default connection
-    if (!db.isOpen()) {
-        qDebug() << "DATABASE ERROR: Default connection is not open in calculerStatistiquesSexe!";
-        return stats;
-    }
-    qDebug() << "Database connection appears open.";
+    // Base query - Select columns you want to display
+    QString sql = "SELECT ID_EMP, NOM, PRENOM, DATE_NAISS_EMP, POSTE, SEXE, NUM_TEL_EMP, SALAIRE, ADRESSE, STATUT FROM EMPLOYE"; // Adjust columns as needed
 
-    // --- Step 1: Get the total number of employees ---
-    QString totalSql = "SELECT COUNT(*) FROM employees"; // Use correct table name
-    qDebug() << "Executing query for total employees:" << totalSql;
-    queryTotal.prepare(totalSql);
-
-    if (!queryTotal.exec()) {
-        qDebug() << "QUERY FAILED (Total Count):" << queryTotal.lastError().text();
-        qDebug() << "Executed SQL was:" << totalSql;
-        // ***** CORRECTED *****
-        qDebug() << "Native Error:" << queryTotal.lastError().nativeErrorCode(); // Call on lastError()
-        return stats;
-    }
-    qDebug() << "Total count query executed successfully.";
-
-    // Fetch the total count
-    if (queryTotal.next()) {
-        totalEmployees = queryTotal.value(0).toDouble();
-        qDebug() << "Total employees fetched:" << totalEmployees;
+    // Add filtering if a filter string is provided
+    if (!filter.isEmpty()) {
+        // Case-insensitive search on common fields
+        sql += " WHERE UPPER(NOM) LIKE UPPER(:filter) OR UPPER(PRENOM) LIKE UPPER(:filter) OR TO_CHAR(ID_EMP) LIKE :filter OR UPPER(POSTE) LIKE UPPER(:filter)";
+        query.prepare(sql);
+        query.bindValue(":filter", "%" + filter + "%"); // Add wildcards for LIKE search
     } else {
-        qDebug() << "WARNING: Total count query returned no rows! Table 'employees' might be empty or missing.";
+        query.prepare(sql);
     }
 
-    // Handle case where there are no employees
-    if (totalEmployees < 1) {
-        qDebug() << "No employees found (totalEmployees < 1). Returning empty stats.";
-        return stats;
-    }
-
-    // --- Step 2: Get the count for each gender ---
-    QSqlQuery queryGenderCounts;
-    QString genderSql = "SELECT sexe, COUNT(*) FROM employees GROUP BY sexe"; // Use correct table/column names
-    qDebug() << "Executing query for gender counts:" << genderSql;
-    queryGenderCounts.prepare(genderSql);
-
-    if (!queryGenderCounts.exec()) {
-        qDebug() << "QUERY FAILED (Gender Counts):" << queryGenderCounts.lastError().text();
-        qDebug() << "Executed SQL was:" << genderSql;
-        // ***** CORRECTED *****
-        qDebug() << "Native Error:" << queryGenderCounts.lastError().nativeErrorCode(); // Call on lastError()
-        return stats;
-    }
-    qDebug() << "Gender count query executed successfully.";
-
-    // --- Step 3: Calculate percentages and populate the map ---
-    qDebug() << "Processing gender count results...";
-    bool resultsFound = false;
-    while (queryGenderCounts.next()) {
-        resultsFound = true;
-        QString gender = queryGenderCounts.value(0).toString();
-        double count = queryGenderCounts.value(1).toDouble();
-        qDebug() << "  Raw data fetched -> Gender:" << gender << "| Count:" << count;
-
-        if (gender.isEmpty() || gender.isNull()) {
-            qDebug() << "  -> Gender is empty/null, replacing with 'Non spécifié'";
-            gender = "Non spécifié";
-        }
-
-        double percentage = (count / totalEmployees) * 100.0;
-        stats.insert(gender, percentage);
-        qDebug() << "  -> Calculated & Stored -> Gender:" << gender << "| Percentage:" << percentage;
-    }
-
-    if (!resultsFound && totalEmployees > 0) {
-        qDebug() << "WARNING: Gender count query returned successfully, but found no non-NULL gender groups.";
-        qDebug() << "         Please check if the 'sexe' column in the 'employees' table contains actual values or only NULLs.";
-    }
-
-    qDebug() << "--- Exiting calculerStatistiquesSexe. Final stats map size:" << stats.size() << "---";
-    return stats;
-}
-
-
-
-bool Employee::remove(int id) {
-        QSqlDatabase db = QSqlDatabase::database();
-    if (!db.isOpen()) {
-        if (!db.open()) {
-            qDebug() << "Failed to open DB:" << db.lastError().text();
-            return false;
+    // Add sorting
+    if (!sortBy.isEmpty()) {
+        // Basic safety check for common column names - avoid SQL injection risk if sortBy comes from user input directly
+        if (sortBy == "ID_EMP" || sortBy == "NOM" || sortBy == "PRENOM" || sortBy == "POSTE" || sortBy == "SALAIRE") {
+            sql += " ORDER BY " + sortBy;
+            query.prepare(sql); // Re-prepare with ORDER BY
+            // Re-bind if filter was present
+            if (!filter.isEmpty()) {
+                query.bindValue(":filter", "%" + filter + "%");
+            }
+        } else {
+            qDebug() << "Warning: Invalid sort column provided:" << sortBy;
+            // Proceed without sorting or default sort
+            sql += " ORDER BY ID_EMP"; // Default sort
+            query.prepare(sql);
+            if (!filter.isEmpty()) {
+                query.bindValue(":filter", "%" + filter + "%");
+            }
         }
     }
 
-    QSqlQuery query(db);
-    query.prepare("DELETE FROM EMPLOYE WHERE ID_EMP = :id");
-    query.bindValue(":id", id);
 
     if (!query.exec()) {
-        qDebug() << "Failed to delete: " << query.lastError().text();
-        return false;
+        qDebug() << "Error executing query for afficher:" << query.lastError().text();
+        delete model; // Clean up if query fails
+        return nullptr;
     }
 
-    return true;
-}
+    model->setQuery(query); // Pass the executed query to the model
 
-
-
-QSqlQueryModel* Employee::getAll()
-{
-    QSqlQueryModel *model = new QSqlQueryModel();
-    model->setQuery("SELECT id, nom, prenom, num_tel, date_naissance, poste, salaire, sexe, niveau_experience FROM employees");
-
-    if (model->lastError().isValid()) {
-        qDebug() << "Query error:" << model->lastError();
-    }
-
-    // Set column headers
-    model->setHeaderData(0, Qt::Horizontal, tr("ID"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Nom"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Prénom"));
-    model->setHeaderData(3, Qt::Horizontal, tr("Téléphone"));
-    model->setHeaderData(4, Qt::Horizontal, tr("Date Naissance"));
-    model->setHeaderData(5, Qt::Horizontal, tr("Poste"));
-    model->setHeaderData(6, Qt::Horizontal, tr("Salaire"));
-    model->setHeaderData(7, Qt::Horizontal, tr("Sexe"));
-    model->setHeaderData(8, Qt::Horizontal, tr("Niveau Expérience"));
+    // Set user-friendly header names for the table view
+    // Index must match the order in the SELECT statement
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Prénom"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Date Naissance"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Poste"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Sexe"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("Téléphone"));
+    model->setHeaderData(7, Qt::Horizontal, QObject::tr("Salaire"));
+    model->setHeaderData(8, Qt::Horizontal, QObject::tr("Adresse"));
+    model->setHeaderData(9, Qt::Horizontal, QObject::tr("Statut"));
+    // Add more headers if needed
 
     return model;
 }
 
-// Getters implementation
-int Employee::getId() const { return m_id; }
-QString Employee::getNom() const { return m_nom; }
-QString Employee::getPrenom() const { return m_prenom; }
-QString Employee::getNumTel() const { return m_numTel; }
-QDate Employee::getDateNaissance() const { return m_dateNaissance; }
-QString Employee::getPoste() const { return m_poste; }
-double Employee::getSalaire() const { return m_salaire; }
-QString Employee::getSexe() const { return m_sexe; }
-QString Employee::getNiveauExp() const { return m_niveauExp; }
-QString Employee::getLastError() const { return m_lastError; }
 
-// Setters implementation
-void Employee::setId(int id) { m_id = id; }
-void Employee::setNom(const QString& nom) { m_nom = nom; }
-void Employee::setPrenom(const QString& prenom) { m_prenom = prenom; }
-void Employee::setNumTel(const QString& numTel) { m_numTel = numTel; }
-void Employee::setDateNaissance(const QDate& date) { m_dateNaissance = date; }
-void Employee::setPoste(const QString& poste) { m_poste = poste; }
-void Employee::setSalaire(double salaire) { m_salaire = salaire; }
-void Employee::setSexe(const QString& sexe) { m_sexe = sexe; }
-void Employee::setNiveauExp(const QString& niveauExp) { m_niveauExp = niveauExp; }
+// Static method
+Employe Employe::chercher(int id)
+{
+    QSqlQuery query;
+    Employe emp; // Create a default/empty employee object
+
+    query.prepare("SELECT ID_EMP, NOM, PRENOM, ADRESSE, NUM_TEL_EMP, DATE_NAISS_EMP, POSTE, SALAIRE, STATUT, SEXE, MDP "
+                  "FROM EMPLOYE WHERE ID_EMP = :id");
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        qDebug() << "Error searching employee by ID:" << query.lastError().text();
+        return emp; // Return the default object (ID = -1)
+    }
+
+    // If a record is found, populate the employee object
+    if (query.next()) {
+        emp.setIdEmp(query.value("ID_EMP").toInt());
+        emp.setNom(query.value("NOM").toString());
+        emp.setPrenom(query.value("PRENOM").toString());
+        emp.setAdresse(query.value("ADRESSE").toString());
+        emp.setNumTelEmp(query.value("NUM_TEL_EMP").toString());
+        emp.setDateNaissEmp(query.value("DATE_NAISS_EMP").toDate());
+        emp.setPoste(query.value("POSTE").toString());
+        emp.setSalaire(query.value("SALAIRE").toDouble());
+        emp.setStatut(query.value("STATUT").toString());
+        emp.setSexe(query.value("SEXE").toString());
+        emp.setMdp(query.value("MDP").toString()); // Retrieve password
+    }
+    // If query.next() is false, the default emp object (ID -1) is returned
+
+    return emp;
+}
+
+
+bool Employe::modifier(int id_to_update)
+{
+    QSqlQuery query;
+
+    // Prepare UPDATE statement
+    query.prepare("UPDATE EMPLOYE SET "
+                  "NOM = :nom, PRENOM = :prenom, ADRESSE = :adresse, NUM_TEL_EMP = :num_tel, "
+                  "DATE_NAISS_EMP = :date_n, POSTE = :poste, SALAIRE = :salaire, STATUT = :statut, "
+                  "SEXE = :sexe, MDP = :mdp "
+                  "WHERE ID_EMP = :id_update"); // Condition to update specific row
+
+    // Bind values from the *current object's* members
+    query.bindValue(":nom", this->nom);
+    query.bindValue(":prenom", this->prenom);
+    query.bindValue(":adresse", this->adresse);
+    query.bindValue(":num_tel", this->num_tel_emp);
+    query.bindValue(":date_n", this->date_naiss_emp);
+    query.bindValue(":poste", this->poste);
+    query.bindValue(":salaire", this->salaire);
+    query.bindValue(":statut", this->statut);
+    query.bindValue(":sexe", this->sexe);
+    query.bindValue(":mdp", this->mdp);
+    query.bindValue(":id_update", id_to_update); // Bind the ID for the WHERE clause
+
+    if (!query.exec()) {
+        qDebug() << "Error updating employee:" << query.lastError().text();
+        return false;
+    }
+
+    // Check if any row was actually affected (optional but good)
+    // return query.numRowsAffected() > 0;
+    return true; // Return true if execution succeeded
+}
+
+// Static method
+bool Employe::supprimer(int id)
+{
+    QSqlQuery query;
+
+    query.prepare("DELETE FROM EMPLOYE WHERE ID_EMP = :id");
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        qDebug() << "Error deleting employee:" << query.lastError().text();
+        return false;
+    }
+
+    // Check if a row was actually deleted
+    return query.numRowsAffected() > 0;
+}

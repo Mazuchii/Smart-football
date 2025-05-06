@@ -8,6 +8,7 @@ QT += sql
 QT       += core sql
 QT += printsupport
 QT += charts
+QT += sql core widgets printsupport # Keep these core modules
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Atelier_Connexion

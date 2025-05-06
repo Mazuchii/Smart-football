@@ -1,69 +1,66 @@
-#ifndef EMPLOYEE_H
-#define EMPLOYEE_H
+#ifndef EMPLOYE_H
+#define EMPLOYE_H
 
 #include <QString>
-#include <QSqlQuery>
-#include <QSqlQueryModel>
-#include <QSqlError>
 #include <QDate>
-#include <QObject>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlQueryModel>
+// Removed QMap and QPair as stats method is removed
 
-#include <QMap>
-
-class Employee: public QObject
+class Employe
 {
-Q_OBJECT
+private:
+    int id_emp;
+    QString nom;
+    QString prenom;
+    QString adresse;
+    QString num_tel_emp;
+    QDate date_naiss_emp;
+    QString poste;
+    double salaire;
+    QString statut;
+    QString sexe;
+    QString mdp;
+
 public:
+    Employe();
+    Employe(int id, QString n, QString p, QString adr, QString tel, QDate dateN,
+            QString post, double sal, QString stat, QString sex, QString pass);
 
-    Employee();
-    Employee(int id, const QString& nom, const QString& prenom, const QString& numTel,
-             const QDate& dateNaiss, const QString& poste, double salaire,
-             const QString& sexe, const QString& niveauExp);
-
-    // CRUD operations
-    bool create();
-    bool update();
-    bool remove(int id);
-    static QSqlQueryModel* getAll();
- static QMap<QString, double> calculerStatistiquesSexe();
     // Getters
-    int getId() const;
+    int getIdEmp() const;
     QString getNom() const;
     QString getPrenom() const;
-    QString getNumTel() const;
-    QDate getDateNaissance() const;
+    QString getAdresse() const;
+    QString getNumTelEmp() const;
+    QDate getDateNaissEmp() const;
     QString getPoste() const;
     double getSalaire() const;
+    QString getStatut() const;
     QString getSexe() const;
-    QString getNiveauExp() const;
-    QString getLastError() const;
+    QString getMdp() const;
 
     // Setters
-    void setId(int id);
-    void setNom(const QString& nom);
-    void setPrenom(const QString& prenom);
-    void setNumTel(const QString& numTel);
-    void setDateNaissance(const QDate& date);
-    void setPoste(const QString& poste);
-    void setSalaire(double salaire);
-    void setSexe(const QString& sexe);
-    void setNiveauExp(const QString& niveauExp);
+    void setIdEmp(int id);
+    void setNom(const QString &n);
+    void setPrenom(const QString &p);
+    void setAdresse(const QString &adr);
+    void setNumTelEmp(const QString &tel);
+    void setDateNaissEmp(const QDate &dateN);
+    void setPoste(const QString &post);
+    void setSalaire(double sal);
+    void setStatut(const QString &stat);
+    void setSexe(const QString &sex);
+    void setMdp(const QString &pass);
 
-    // Database initialization
-    static bool initializeDatabase();
+    // Database Methods
+    bool ajouter();
+    bool modifier(int id_to_update);
+    static QSqlQueryModel* afficher(QString filter = "", QString sortBy = "ID_EMP");
+    static Employe chercher(int id);
+    static bool supprimer(int id);
 
-private:
-    int m_id;
-    QString m_nom;
-    QString m_prenom;
-    QString m_numTel;
-    QDate m_dateNaissance;
-    QString m_poste;
-    double m_salaire;
-    QString m_sexe;
-    QString m_niveauExp;
-    QString m_lastError;
-
+    // *** NO calculerStatistiquesPoste() method here ***
 };
 
-#endif // EMPLOYEE_H
+#endif // EMPLOYE_H

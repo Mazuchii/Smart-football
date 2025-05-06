@@ -36,18 +36,16 @@ namespace {
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::stringData(
     "MainWindow",
-    "onAddButtonClicked",
+    "on_addButton_2_clicked",
     "",
-    "onEditButtonClicked",
-    "onDeleteButtonClicked",
-    "onTableClicked",
-    "QModelIndex",
-    "index",
-    "refreshTable",
-    "afficherStatistiquesSexeChart",
-    "on_statistiquesButton_clicked",
+    "on_deleteButton_2_clicked",
+    "on_editButton_2_clicked",
     "on_btrecherche_clicked",
-    "on_PDF_clicked"
+    "on_PDF_clicked",
+    "on_tabWidget_currentChanged",
+    "index",
+    "loadEmployeeDataForEdit",
+    "id"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -60,7 +58,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,26 +66,22 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   68,    2, 0x08,    1 /* Private */,
-       3,    0,   69,    2, 0x08,    2 /* Private */,
-       4,    0,   70,    2, 0x08,    3 /* Private */,
-       5,    1,   71,    2, 0x08,    4 /* Private */,
-       8,    0,   74,    2, 0x08,    6 /* Private */,
-       9,    0,   75,    2, 0x08,    7 /* Private */,
-      10,    0,   76,    2, 0x08,    8 /* Private */,
-      11,    0,   77,    2, 0x08,    9 /* Private */,
-      12,    0,   78,    2, 0x08,   10 /* Private */,
+       1,    0,   56,    2, 0x08,    1 /* Private */,
+       3,    0,   57,    2, 0x08,    2 /* Private */,
+       4,    0,   58,    2, 0x08,    3 /* Private */,
+       5,    0,   59,    2, 0x08,    4 /* Private */,
+       6,    0,   60,    2, 0x08,    5 /* Private */,
+       7,    1,   61,    2, 0x08,    6 /* Private */,
+       9,    1,   64,    2, 0x08,    8 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 6,    7,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    8,
+    QMetaType::Void, QMetaType::QString,   10,
 
        0        // eod
 };
@@ -101,25 +95,22 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSMainWindowENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>,
-        // method 'onAddButtonClicked'
+        // method 'on_addButton_2_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'onEditButtonClicked'
+        // method 'on_deleteButton_2_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'onDeleteButtonClicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'onTableClicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<const QModelIndex &, std::false_type>,
-        // method 'refreshTable'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'afficherStatistiquesSexeChart'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_statistiquesButton_clicked'
+        // method 'on_editButton_2_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_btrecherche_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_PDF_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_tabWidget_currentChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'loadEmployeeDataForEdit'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>
     >,
     nullptr
 } };
@@ -130,15 +121,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->onAddButtonClicked(); break;
-        case 1: _t->onEditButtonClicked(); break;
-        case 2: _t->onDeleteButtonClicked(); break;
-        case 3: _t->onTableClicked((*reinterpret_cast< std::add_pointer_t<QModelIndex>>(_a[1]))); break;
-        case 4: _t->refreshTable(); break;
-        case 5: _t->afficherStatistiquesSexeChart(); break;
-        //case 6: _t->on_statistiquesButton_clicked(); break;
-        case 7: _t->on_btrecherche_clicked(); break;
-        case 8: _t->on_PDF_clicked(); break;
+        case 0: _t->on_addButton_2_clicked(); break;
+        case 1: _t->on_deleteButton_2_clicked(); break;
+        case 2: _t->on_editButton_2_clicked(); break;
+        case 3: _t->on_btrecherche_clicked(); break;
+        case 4: _t->on_PDF_clicked(); break;
+        case 5: _t->on_tabWidget_currentChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 6: _t->loadEmployeeDataForEdit((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     }
@@ -163,13 +152,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 7)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 7;
     }
     return _id;
 }
