@@ -1,0 +1,10 @@
+release/ball.o
+release/connection.o
+release/gesmatch.o
+release/main.o
+release/match.o
+release/player.o
+release/simulation.o
+release/qrc_assetes.o
+release/moc_match.o
+release/moc_simulation.o

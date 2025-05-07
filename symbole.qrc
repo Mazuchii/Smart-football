@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/symbole">
+        <file>assetes/img/icons8-flèche-haut-64.png</file>
+        <file>assetes/img/icons8-flèche-bas-64.png</file>
+    </qresource>
+</RCC>

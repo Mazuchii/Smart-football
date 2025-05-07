@@ -1,0 +1,10 @@
+debug/ball.o
+debug/connection.o
+debug/gesmatch.o
+debug/main.o
+debug/match.o
+debug/player.o
+debug/simulation.o
+debug/qrc_assetes.o
+debug/moc_match.o
+debug/moc_simulation.o
