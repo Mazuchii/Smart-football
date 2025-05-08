@@ -1,0 +1,10 @@
+release/main.o
+release/mainwindow.o
+release/joueur.o
+release/employe.o
+release/dialog.o
+release/connection.o
+release/connexion.o
+release/qrc_qmake_qmake_qm_files.o
+release/moc_mainwindow.o
+release/moc_dialog.o
